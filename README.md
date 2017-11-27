@@ -1,20 +1,30 @@
-This is a simple plugin that highlights operator characters for every language.
-I want characters like `+,-,/,*,.,:,=` etc. highlighted in every programming
-language I write, so I wrote this simple script.
+# Vim operator highlight
 
-The default color for operator highlighting is cyan, but this can be changed by
-setting a different value to the `g:ophigh_color` variable for terminal and
-`g:ophigh_color_gui` variable for gui. For instance, adding
-`let g:ophigh_color = 226` and `let g:ophigh_color_gui = "#F6FF00"` to your 
-`vimrc` will highlight all operators with a bright yellow color.
+## What's it do?
+```vim
+syntax match ParenChars ")\|("
+syntax match BraceChars "{\|}"
+syntax match BracketChars "\[\|\]"
+syntax match OperatorChars "?\|+\|-\|\*\|;\|:\|,\|<\|>\|&\||\|!\|\~\|%\|=\|\.\|/\(/\|*\)\@!"
+```
+If you don't know vimscript, it means it highlights paren, bracves, brackets and
+operators as their own highlight group.
 
-You can also configure the plugin to ignore certain filetypes and thus not
-highlight operators in them. This is done by adding a new key to the
-`g:ophigh_filetypes_to_ignore` dictionary (with whatever value you want, only
-the key needs to be present). For example:
-`g:ophigh_filetypes_to_ignore.markdown = 1`.
+## Options
+```vim
+let g:ophigh_highlight_link_group = "Operator"
+let g:bracehigh_highlight_link_group = "Special"
+let g:brackethigh_highlight_link_group = "Directory"
+let g:parenhigh_highlight_link_group = "Identifier"
+let g:ophigh_filetypes_to_ignore = {'jinja': 1, 'help': 1, 'notes': 1,
+            \ 'markdown': 1, 'less': 1, 'sh': 1, 'html': 1, 'diff': 1,
+            \ 'qf': 1, 'css': 1, 'txt': 1
+\}
 
-If you add that to your vimrc, then markdown files will be ignored. NOTE: the
-key needs to be the filetype, not the extension! You can get the filetype of the
-current file in Vim with `:set filetype?`.
+```
+I use links because if you switch colorschemes or machines you'll want something
+that is pre-existing otherwise it will complain and no one wants to hear
+complaining.
 
+For the filetypes it's a good base set, feel free to add or remove, or just make
+your own dictionary.
